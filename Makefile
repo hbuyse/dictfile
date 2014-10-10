@@ -6,3 +6,6 @@ LDFLAGS =
 
 
 main: main.o
+
+l: main
+	./main
