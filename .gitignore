@@ -31,6 +31,6 @@
 *.x86_64
 *.hex
 
-main
+wordcount
 doxygen/
 doxygen.html

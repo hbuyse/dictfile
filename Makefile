@@ -1,4 +1,4 @@
-EXEC = main
+EXEC = wordcount
 
 CC = gcc
 LD = gcc
