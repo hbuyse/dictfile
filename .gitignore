@@ -32,3 +32,5 @@
 *.hex
 
 main
+doxygen/
+doxygen.html
