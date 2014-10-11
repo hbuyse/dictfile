@@ -18,7 +18,7 @@ else
 endif
 
 
-main: $(OBJ)
+$(EXEC): $(OBJ)
 	$(VERBOSE) $(LD) $(OBJ) -o $(EXEC) $(LDFLAGS)
 
 
@@ -32,7 +32,7 @@ distclean:
 
 
 # Launch the program
-launch: all
+launch: $(EXEC)
 	$(VERBOSE) ./$(EXEC)
 
 
