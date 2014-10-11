@@ -1,14 +1,20 @@
 EXEC = wordcount
 
-CC = gcc
-LD = gcc
+CC = clang
+LD = clang
 
 CFLAGS = -g3 -Wall -fmessage-length=0
 LDFLAGS =
 
+DIR_SRC       = src
+DIR_OBJ       = obj
+
+$(shell mkdir -p $(DIR_SRC))
+$(shell mkdir -p $(DIR_OBJ))
+
 SRC           = $(shell find . -name '*.c')
-OBJ           = $(foreach var,$(notdir $(SRC:.c=.o)),$(var))
-HDR          += $(foreach var,$(dir $(shell find . -name *.h)),-I$(var))
+OBJ           = $(foreach var,$(notdir $(SRC:.c=.o)),$(DIR_OBJ)/$(var))
+HDR          += $(foreach var,$(dir $(shell find . -name '*.h')),-I$(var))
 
 # Put verbosity on
 ifeq ($(V),1)
@@ -18,11 +24,14 @@ else
 endif
 
 
+vpath %.c $(DIR_SRC)
+
+
 $(EXEC): $(OBJ)
 	$(VERBOSE) $(LD) $(OBJ) -o $(EXEC) $(LDFLAGS)
 
 
-%.o: %.c
+$(DIR_OBJ)/%.o: %.c
 	$(VERBOSE) $(CC) -c -o $@ $< $(CFLAGS) $(HDR)
 
 
@@ -85,5 +94,5 @@ indent:
 	--space-after-while \
 	--indent-level4 \
 	--no-tabs \
-	$(SRC) $(HDR)
+	$(DIR_SRC)/*
 	$(VERBOSE) rm `find . -name *~`
