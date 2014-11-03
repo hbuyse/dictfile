@@ -8,32 +8,31 @@
 #include "ufgets.h"
 
 
+
+
+
 /**
  * @brief Primary program
  *
  * @return Error code
  */
-int main(int argc, char const *argv[]) {
+int main(int argc, const char *argv[]) {
     /* List
      */
     llist   mlist = NULL;
 
-    char* string = ufgets(stdin);
+    /* File pointer
+     */
+    FILE* fp = NULL;
 
-    printf("String : %s\n", string);
-
-    mlist = compareElements(mlist, "Toto");
-    mlist = compareElements(mlist, "Toto");
-    mlist = compareElements(mlist, "Tata");
-    mlist = compareElements(mlist, "Toti");
-    mlist = compareElements(mlist, "Toto");
+    /* Open dictionary file
+     */
+    mlist = openDictfile(argv[1]);
 
 
+    /* Display the results
+     */
     display(mlist);
-
-    if (string) {
-        free(string);
-    }
 
     return 0;
 }

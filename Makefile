@@ -3,7 +3,7 @@ EXEC = wordcount
 CC = clang
 LD = clang
 
-CFLAGS = -g3 -Wall -fmessage-length=0
+CFLAGS = -g3 -Wall -fmessage-length=0 -DFGETS
 LDFLAGS =
 
 DIR_SRC       = src
@@ -42,7 +42,7 @@ distclean:
 
 # Launch the program
 launch: $(EXEC)
-	$(VERBOSE) ./$(EXEC)
+	$(VERBOSE) ./$(EXEC) dictfile
 
 
 l: launch

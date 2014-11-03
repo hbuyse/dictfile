@@ -18,7 +18,7 @@ llist addElement(llist list, char *string) {
      */
     newElement->string = malloc(sizeof(string));
     strcpy(newElement->string, string);
-    newElement->occur = 1;
+    newElement->occur = 0;
 
     /* Assigning the address of the next element to the element
      */
@@ -37,7 +37,7 @@ void display(llist list) {
     /* While we are not at the end of the list
      */
     while (tmp != NULL) {
-        printf("%d \t %s \n", tmp->occur, tmp->string);
+        printf("%d \t %s", tmp->occur, tmp->string);
 
         /* Going forward
          */
@@ -46,7 +46,7 @@ void display(llist list) {
 
     int     total = totalWords(list);
 
-    printf("%d \t total words \n", total);
+    printf("%d \t total words\n", total);
 }
 
 
@@ -92,4 +92,78 @@ int totalWords(llist list) {
     }
 
     return totalWords;
+}
+
+
+
+llist openDictfile(const char* firstArg) {
+    /* Temporary list
+     */
+    llist   tmp = NULL;
+
+    /* File pointer
+     */
+    FILE* fp = NULL;
+
+    /* Get the words
+     */
+    char   *str = NULL;
+    char   *p = NULL;
+
+    if (strcmp(dictfile, firstArg) == 0) {
+#ifdef GETLINE
+        char* line = NULL;
+        size_t len = 0;
+        ssize_t read;
+
+        fp = fopen(dictfile, "r");
+        if (fp == NULL)
+           exit(EXIT_FAILURE);
+
+        while ((read = getline(&line, &len, fp)) != -1) {
+            /* Check if it begins with '#' or a newline
+             */
+            if (line[0] != '#' && line[0] != '\n') {
+                line[sizeof(line)-1] = '\0';
+                printf("%zu\n", len);
+                tmp = compareElements(tmp, line);
+            }
+        }
+
+        if (line)
+            free(line);
+        fclose(fp);
+#elif FGETS
+        fp = fopen(dictfile, "r");
+        char line[LIMIT_STRING];
+
+        while (fgets(line, sizeof(line), fp)) {
+            /* Check if it begins with '#' or a new line
+             */
+            if (line[0] != '#' && line[0] != '\n') {
+                tmp = compareElements(tmp, line);
+            }
+        }
+        fclose(fp);
+#endif
+    }
+    else {
+        /* While we are not at the end of the string tokened,
+           we compare every word.
+        */
+        str = ufgets(stdin);
+        p = strtok(str, " ");
+        for (int i = 0; p != NULL; i++) {
+            tmp = compareElements(tmp, p);
+            p = strtok(NULL, " ");
+        }
+
+        /* Free the string
+         */
+        if (str) {
+                free(str);
+        }
+    }
+
+    return tmp;
 }

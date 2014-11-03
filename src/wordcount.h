@@ -8,14 +8,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "ufgets.h"
 
 
 /**
  * @def         LIMIT_STRING
  * @brief       Limit size of a string
  */
-#define LIMIT_STRING 100
+#define LIMIT_STRING 50
 
+
+static const char dictfile[9] = "dictfile\0";
 
 /**
  * @typedef     element
@@ -28,9 +31,9 @@ typedef struct elem element;
  * @brief       Creation of an element that can store two types of data : a string and a number of occurrences.
  */
 struct elem {
-    char   *string;     ///< String stored
-    int     occur;      ///< Number of occurrences
-    struct elem *nxt;   ///< Next element
+    char   *string;             ///< String stored
+    int     occur;              ///< Number of occurrences
+    struct elem *nxt;           ///< Next element
 };
 
 /**
@@ -77,3 +80,6 @@ llist   compareElements(llist list, char *string);
  * @return The total number of words
  */
 int     totalWords(llist list);
+
+
+llist openDictfile(const char* firstArg);
