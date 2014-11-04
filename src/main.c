@@ -21,7 +21,7 @@ int main(int argc, const char *argv[]) {
      */
     llist   mlist = NULL;
 
-    
+
     /* Open dictionary file
      */
     mlist = openDictfile(argv[1]);

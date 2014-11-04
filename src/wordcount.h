@@ -82,4 +82,4 @@ llist   compareElements(llist list, char *string);
 int     totalWords(llist list);
 
 
-llist openDictfile(const char* firstArg);
+llist   openDictfile(const char *firstArg);

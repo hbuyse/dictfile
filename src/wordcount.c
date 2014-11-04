@@ -18,7 +18,7 @@ llist addElement(llist list, char *string) {
      */
     newElement->string = malloc(sizeof(string));
     strcpy(newElement->string, string);
-    newElement->occur = 0;
+    newElement->occur = 1;
 
     /* Assigning the address of the next element to the element
      */
@@ -96,14 +96,14 @@ int totalWords(llist list) {
 
 
 
-llist openDictfile(const char* firstArg) {
+llist openDictfile(const char *firstArg) {
     /* Temporary list
      */
     llist   tmp = NULL;
 
     /* File pointer
      */
-    FILE* fp = NULL;
+    FILE   *fp = NULL;
 
     /* Get the words
      */
@@ -112,19 +112,19 @@ llist openDictfile(const char* firstArg) {
 
     if (strcmp(dictfile, firstArg) == 0) {
 #ifdef GETLINE
-        char* line = NULL;
-        size_t len = 0;
+        char   *line = NULL;
+        size_t  len = 0;
         ssize_t read;
 
         fp = fopen(dictfile, "r");
         if (fp == NULL)
-           exit(EXIT_FAILURE);
+            exit(EXIT_FAILURE);
 
         while ((read = getline(&line, &len, fp)) != -1) {
             /* Check if it begins with '#' or a newline
              */
             if (line[0] != '#' && line[0] != '\n') {
-                line[sizeof(line)-1] = '\0';
+                line[sizeof(line) - 1] = '\0';
                 printf("%zu\n", len);
                 tmp = compareElements(tmp, line);
             }
@@ -135,7 +135,7 @@ llist openDictfile(const char* firstArg) {
         fclose(fp);
 #elif FGETS
         fp = fopen(dictfile, "r");
-        char line[LIMIT_STRING];
+        char    line[LIMIT_STRING];
 
         while (fgets(line, sizeof(line), fp)) {
             /* Check if it begins with '#' or a new line
@@ -150,7 +150,7 @@ llist openDictfile(const char* firstArg) {
     else {
         /* While we are not at the end of the string tokened,
            we compare every word.
-        */
+         */
         str = ufgets(stdin);
         p = strtok(str, " ");
         for (int i = 0; p != NULL; i++) {
@@ -161,7 +161,7 @@ llist openDictfile(const char* firstArg) {
         /* Free the string
          */
         if (str) {
-                free(str);
+            free(str);
         }
     }
 
