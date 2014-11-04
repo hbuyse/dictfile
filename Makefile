@@ -17,6 +17,7 @@ OBJ           = $(foreach var,$(notdir $(SRC:.c=.o)),$(DIR_OBJ)/$(var))
 HDR          += $(foreach var,$(dir $(shell find . -name '*.h')),-I$(var))
 
 # Put verbosity on
+V ?= 1
 ifeq ($(V),1)
 	VERBOSE	= @
 else
@@ -28,10 +29,12 @@ vpath %.c $(DIR_SRC)
 
 
 $(EXEC): $(OBJ)
+	$(VERBOSE) echo "Linking object files"
 	$(VERBOSE) $(LD) $(OBJ) -o $(EXEC) $(LDFLAGS)
 
 
 $(DIR_OBJ)/%.o: %.c
+	$(VERBOSE) echo "Compiling $< to $@"
 	$(VERBOSE) $(CC) -c -o $@ $< $(CFLAGS) $(HDR)
 
 
