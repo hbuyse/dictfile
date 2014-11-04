@@ -17,6 +17,16 @@ in the input streams, and also count the total number of words. Matching is perf
 on a full word basis. Words are delimited by white space.
 
 
+Careful
+*******
+
+**Always add a blank line to the end of the files we parse.**
+
+
+
+Other things to know
+********************
+
 A suggested output format is: nnn TAB word CR, which would yield something like:
 
 10 foo
